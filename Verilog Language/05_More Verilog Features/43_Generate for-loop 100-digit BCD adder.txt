@@ -1,0 +1,21 @@
+module top_module( 
+    input [399:0] a, b,
+    input cin,
+    output cout,
+    output [399:0] sum );
+    
+    wire [99:0] tmp_cout;
+    genvar i;
+    generate 
+        
+        for (i=1; i<100;i++) begin:gn
+            bcd_fadd fad_i(a[i*4+3:i*4],b[i*4+3:i*4],tmp_cout[i-1],tmp_cout[i],sum[i*4+3:i*4]);  
+        
+        end
+    endgenerate
+    
+    bcd_fadd fad_0 (a[3:0],b[3:0],cin,tmp_cout[0],sum[3:0]);
+    assign cout = tmp_cout[99];
+
+
+endmodule
